@@ -39,7 +39,8 @@
   },
   "main": "./extension.js",
   "scripts": {
-    "vscode:prepublish": "vsce package"
+    "vscode:prepublish": "npm run compile",
+    "compile": "echo 'No build step needed'"
   },
   "devDependencies": {}
 }
