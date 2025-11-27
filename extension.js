@@ -7,7 +7,10 @@ function activate(context) {
     let createArticle = vscode.commands.registerCommand(
         "latexTemplates.createArticle",
         function () {
-            createFile("article.tex", getArticleTemplate());
+            vscode.window.showInputBox({ prompt: "Enter file name", value: "article.tex" }).then(name => {
+                if (!name) return;
+                createFile(name, getArticleTemplate());
+            });
         }
     );
 
@@ -15,7 +18,10 @@ function activate(context) {
     let createBook = vscode.commands.registerCommand(
         "latexTemplates.createBook",
         function () {
-            createFile("book.tex", getBookTemplate());
+            vscode.window.showInputBox({ prompt: "Enter file name", value: "book.tex" }).then(name => {
+                if (!name) return;
+                createFile(name, getBookTemplate());
+            });
         }
     );
 
@@ -23,7 +29,10 @@ function activate(context) {
     let createLetter = vscode.commands.registerCommand(
         "latexTemplates.createLetter",
         function () {
-            createFile("letter.tex", getLetterTemplate());
+            vscode.window.showInputBox({ prompt: "Enter file name", value: "letter.tex" }).then(name => {
+                if (!name) return;
+                createFile(name, getLetterTemplate());
+            });
         }
     );
 
@@ -48,8 +57,7 @@ function createFile(filename, content) {
 
 // Templates
 function getArticleTemplate() {
-    return `
-\\documentclass{article}
+    return `\documentclass{article}
 \\usepackage[utf8]{inputenc}
 
 \\title{Article Template}
@@ -69,8 +77,7 @@ Your content here.
 }
 
 function getBookTemplate() {
-    return `
-\\documentclass{book}
+    return `\documentclass{book}
 \\usepackage[utf8]{inputenc}
 
 \\title{Book Template}
@@ -90,8 +97,7 @@ Your content here.
 }
 
 function getLetterTemplate() {
-    return `
-\\documentclass{letter}
+    return `\documentclass{letter}
 \\usepackage[utf8]{inputenc}
 
 \\signature{Your Name}
