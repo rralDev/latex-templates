@@ -1,32 +1,45 @@
 {
-    "name": "latex-templates",
-    "displayName": "LaTeX Templates",
-    "publisher": "LuisRobles",
-    "version": "0.0.3",
-    "description": "Quick LaTeX templates for article, book, report, letter and more.",
-    "main": "extension.js",
-    "engines": {
-        "vscode": "^1.80.0"
-    },
-    "categories": ["Other", "Snippets"],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/LuisRobles/latex-templates"
-    },
-    "contributes": {
-        "commands": [
-            {
-                "command": "latexTemplates.createArticle",
-                "title": "Create LaTeX Article Template"
-            },
-            {
-                "command": "latexTemplates.createBook",
-                "title": "Create LaTeX Book Template"
-            },
-            {
-                "command": "latexTemplates.createLetter",
-                "title": "Create LaTeX Letter Template"
-            }
-        ]
-    }
+  "name": "latex-templates",
+  "displayName": "LaTeX Templates",
+  "description": "Quickly create LaTeX files (article, book, letter) from commands in VS Code.",
+  "version": "0.0.3",
+  "publisher": "LuisRobles",  
+  "engines": {
+    "vscode": "^1.0.0"
+  },
+  "categories": [
+    "Snippets",
+    "Other"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rralDev/latex-templates.git"
+  },
+  "icon": "images/icon.png",
+  "activationEvents": [
+    "onCommand:createLatexArticleTemplate",
+    "onCommand:createLatexBookTemplate",
+    "onCommand:createLatexLetterTemplate"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "latexTemplates.createArticle",
+        "title": "LaTeX: Create Article Template"
+      },
+      {
+        "command": "latexTemplates.createBook",
+        "title": "LaTeX: Create Book Template"
+      },
+      {
+        "command": "latexTemplates.createLetter",
+        "title": "LaTeX: Create Letter Template"
+      }
+    ]
+  },
+  "main": "./extension.js",
+  "scripts": {
+    "vscode:prepublish": "vsce package"
+  },
+  "devDependencies": {}
 }
