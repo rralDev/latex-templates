@@ -1,0 +1,32 @@
+{
+    "name": "latex-templates",
+    "displayName": "LaTeX Templates",
+    "publisher": "LuisRobles",
+    "version": "0.0.3",
+    "description": "Quick LaTeX templates for article, book, report, letter and more.",
+    "main": "extension.js",
+    "engines": {
+        "vscode": "^1.80.0"
+    },
+    "categories": ["Other", "Snippets"],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/LuisRobles/latex-templates"
+    },
+    "contributes": {
+        "commands": [
+            {
+                "command": "latexTemplates.createArticle",
+                "title": "Create LaTeX Article Template"
+            },
+            {
+                "command": "latexTemplates.createBook",
+                "title": "Create LaTeX Book Template"
+            },
+            {
+                "command": "latexTemplates.createLetter",
+                "title": "Create LaTeX Letter Template"
+            }
+        ]
+    }
+}
