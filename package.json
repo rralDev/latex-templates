@@ -17,9 +17,9 @@
   },
   "icon": "images/icon.png",
   "activationEvents": [
-    "onCommand:createLatexArticleTemplate",
-    "onCommand:createLatexBookTemplate",
-    "onCommand:createLatexLetterTemplate"
+    "onCommand:latexTemplates.createArticle",
+    "onCommand:latexTemplates.createBook",
+    "onCommand:latexTemplates.createLetter"
   ],
   "contributes": {
     "commands": [

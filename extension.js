@@ -1,95 +1,117 @@
 const vscode = require("vscode");
 
-function createDocument(template) {
-    const docPromise = vscode.workspace.openTextDocument({
-        content: template,
-        language: "latex"
-    });
+function activate(context) {
+    console.log("LaTeX Templates extension is active!");
 
-    docPromise.then(doc => {
-        vscode.window.showTextDocument(doc);
-    });
+    // Create Article Template
+    let createArticle = vscode.commands.registerCommand(
+        "latexTemplates.createArticle",
+        function () {
+            createFile("article.tex", getArticleTemplate());
+        }
+    );
+
+    // Create Book Template
+    let createBook = vscode.commands.registerCommand(
+        "latexTemplates.createBook",
+        function () {
+            createFile("book.tex", getBookTemplate());
+        }
+    );
+
+    // Create Letter Template
+    let createLetter = vscode.commands.registerCommand(
+        "latexTemplates.createLetter",
+        function () {
+            createFile("letter.tex", getLetterTemplate());
+        }
+    );
+
+    context.subscriptions.push(createArticle, createBook, createLetter);
 }
 
-function activate(context) {
+// Helper: creates a new file with content
+function createFile(filename, content) {
+    const workspace = vscode.workspace.workspaceFolders;
 
-    const articleTemplate = `
+    if (!workspace) {
+        vscode.window.showErrorMessage("You must open a folder before creating a LaTeX template.");
+        return;
+    }
+
+    const folder = workspace[0].uri;
+    const fileUri = folder.with({ path: folder.path + "/" + filename });
+
+    vscode.workspace.fs.writeFile(fileUri, Buffer.from(content, "utf8"))
+        .then(() => vscode.window.showInformationMessage(`Created ${filename}`));
+}
+
+// Templates
+function getArticleTemplate() {
+    return `
 \\documentclass{article}
+\\usepackage[utf8]{inputenc}
 
-\\title{Título del Artículo}
-\\author{Autor}
+\\title{Article Template}
+\\author{Author Name}
 \\date{\\today}
 
 \\begin{document}
 
 \\maketitle
 
-\\section{Introducción}
+\\section{Introduction}
 
-Escribe aquí...
+Your content here.
 
 \\end{document}
-    `;
+`;
+}
 
-    const bookTemplate = `
+function getBookTemplate() {
+    return `
 \\documentclass{book}
+\\usepackage[utf8]{inputenc}
 
-\\title{Título del Libro}
-\\author{Autor}
+\\title{Book Template}
+\\author{Author Name}
 \\date{\\today}
 
 \\begin{document}
 
 \\maketitle
 
-\\chapter{Capítulo 1}
+\\chapter{Introduction}
 
-Contenido aquí...
+Your content here.
 
 \\end{document}
-    `;
+`;
+}
 
-    const letterTemplate = `
+function getLetterTemplate() {
+    return `
 \\documentclass{letter}
+\\usepackage[utf8]{inputenc}
 
-\\signature{Tu Nombre}
-\\address{Tu Dirección}
+\\signature{Your Name}
 
 \\begin{document}
 
-\\begin{letter}{Destinatario}
-\\opening{Estimado,}
+\\begin{letter}{Recipient Name \\\\ Address}
 
-Aquí tu carta...
+\\opening{Dear Name,}
 
-\\closing{Saludos,}
+Your content here.
+
+\\closing{Sincerely,}
 
 \\end{letter}
+
 \\end{document}
-    `;
-
-    context.subscriptions.push(
-        vscode.commands.registerCommand("latex.createArticle", () => {
-            createDocument(articleTemplate);
-        })
-    );
-
-    context.subscriptions.push(
-        vscode.commands.registerCommand("latex.createBook", () => {
-            createDocument(bookTemplate);
-        })
-    );
-
-    context.subscriptions.push(
-        vscode.commands.registerCommand("latex.createLetter", () => {
-            createDocument(letterTemplate);
-        })
-    );
+`;
 }
 
 function deactivate() {}
 
-module.exports = {
-    activate,
-    deactivate
-};
+module.exports = { activate, deactivate };
